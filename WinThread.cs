@@ -16,6 +16,7 @@ namespace KingPongClient
 
         static public Rectangle player2;
         static public Rectangle player1;
+        static public Rectangle ballR;
         public static Ellipse ball;
         public static TextBlock infoText;
         public static TextBlock scooreText;
@@ -30,7 +31,7 @@ namespace KingPongClient
 
             var window = new Window
             {
-                Title = "Zeichenfenster im Thread",
+                Title = "KingPong",
                 Width = 800,
                 Height = 600
             };
@@ -40,7 +41,7 @@ namespace KingPongClient
                 var canvas = new Canvas();
                 window.Content = canvas;
 
-                // Beispiel: rotes Rechteck
+                // Hintergrund zeichnen
                 var rect = new Rectangle
                 {
                     Width = 800,
@@ -75,7 +76,7 @@ namespace KingPongClient
 
 
                 // Beispiel: blaue Ellipse
-                var ellipse = new Ellipse
+                /*var ellipse = new Ellipse
                 {
                     Width = 20,
                     Height = 20,
@@ -83,7 +84,17 @@ namespace KingPongClient
                 };
                 Canvas.SetLeft(ellipse, Program.client.ballX);
                 Canvas.SetTop(ellipse, Program.client.ballY);
-                canvas.Children.Add(ellipse);
+                canvas.Children.Add(ellipse);*/
+
+                ballR = new Rectangle
+                {
+                    Width = 20,
+                    Height = 20,
+                    Fill = Brushes.White
+                };
+                Canvas.SetLeft(player2, Program.client.ballX);
+                Canvas.SetTop(player2, Program.client.ballY);
+                canvas.Children.Add(ballR);
 
 
                 infoText = new TextBlock
@@ -123,14 +134,14 @@ namespace KingPongClient
 
                 // Timer für Zeichenschleife
                 _timer = new DispatcherTimer();
-                _timer.Interval = TimeSpan.FromMilliseconds(16); // ca. 60 FPS
+                _timer.Interval = TimeSpan.FromMilliseconds(10); // ca. 60 FPS
                 _timer.Tick += (s, e) =>
                 {
                     // Position des Paddles aktualisieren
                     Canvas.SetTop(player1, Program.client.paddle1Y);
                     Canvas.SetTop(player2, Program.client.paddle2Y);
-                    Canvas.SetLeft(ellipse, Program.client.ballX);
-                    Canvas.SetTop(ellipse, Program.client.ballY);
+                    Canvas.SetLeft(ballR, Program.client.ballX);
+                    Canvas.SetTop(ballR, Program.client.ballY);
                     infoText.Text = $"Ball X: {Program.client.ballX}, Ball Y: {Program.client.ballY}, GameState: { Program.client.gameState}, Counter: {Program.client.countdown}";
                     scooreText.Text = $"Player1: {Program.client.score1}, Player2: {Program.client.score2}";
 
@@ -152,6 +163,14 @@ namespace KingPongClient
                         case Key.Q:
                             Application.Current.Shutdown();
                             break;
+                    }
+                };
+
+                window.KeyUp += (sender, e) =>
+                {
+                    if(e.Key == Key.W || e.Key == Key.S)
+                    {
+                        Program.client.SendPaddleControl(0);
                     }
                 };
 

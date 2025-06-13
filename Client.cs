@@ -9,7 +9,7 @@ namespace KingPongClient
     public class Client
     {
         private const string KEY_PHRASE = "better atom task thank dynamic audit mixture onion fog";
-        private const string SERVER_IP = "127.0.0.1";
+        private const string SERVER_IP = "pong.geffert.xyz";
         private const int SERVER_PORT = 80;
 
         private TcpClient client;
