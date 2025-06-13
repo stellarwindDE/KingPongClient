@@ -35,8 +35,8 @@ namespace KingPongClient
                 Width = 800,
                 Height = 600
             };
-
-
+                //window.SizeToContent = SizeToContent.Height;
+                
 
                 var canvas = new Canvas();
                 window.Content = canvas;
@@ -92,8 +92,8 @@ namespace KingPongClient
                     Height = 20,
                     Fill = Brushes.White
                 };
-                Canvas.SetLeft(player2, Program.client.ballX);
-                Canvas.SetTop(player2, Program.client.ballY);
+                Canvas.SetLeft(ballR, Program.client.ballX);
+                Canvas.SetTop(ballR, Program.client.ballY);
                 canvas.Children.Add(ballR);
 
 
